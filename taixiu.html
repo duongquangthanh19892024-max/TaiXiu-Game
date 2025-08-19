@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Game Tài X?u</title>
+  <style>
+    body { text-align: center; font-family: Arial; margin-top: 50px; }
+    .dice { font-size: 50px; margin: 10px; }
+    .btn { padding: 10px 20px; font-size: 18px; margin: 10px; }
+  </style>
+</head>
+<body>
+
+  <h1>?? Game Tài X?u</h1>
+  <div>
+    <button class="btn" onclick="placeBet('tai')">Cu?c Tài (11–17)</button>
+    <button class="btn" onclick="placeBet('xiu')">Cu?c X?u (4–10)</button>
+  </div>
+  
+  <div id="diceArea">
+    <span class="dice" id="dice1">?</span>
+    <span class="dice" id="dice2">?</span>
+    <span class="dice" id="dice3">?</span>
+  </div>
+
+  <button class="btn" onclick="rollDice()">Xóc!</button>
+  <h2 id="result"></h2>
+
+  <script>
+    let bet = null;
+
+    function placeBet(choice) {
+      bet = choice;
+      document.getElementById("result").innerText = `Ðã cu?c: ${choice.toUpperCase()}`;
+    }
+
+    function rollDice() {
+      if (!bet) {
+        alert("B?n ph?i ch?n Tài ho?c X?u tru?c!");
+        return;
+      }
+
+      const dice1 = Math.floor(Math.random() * 6) + 1;
+      const dice2 = Math.floor(Math.random() * 6) + 1;
+      const dice3 = Math.floor(Math.random() * 6) + 1;
+      const total = dice1 + dice2 + dice3;
+
+      const diceFaces = ["?","?","?","?","?","?"];
+      document.getElementById("dice1").innerText = diceFaces[dice1 - 1];
+      document.getElementById("dice2").innerText = diceFaces[dice2 - 1];
+      document.getElementById("dice3").innerText = diceFaces[dice3 - 1];
+
+      let outcome = (total >= 4 && total <= 10) ? 'xiu' : 'tai';
+      let message = `T?ng: ${total} ? ${outcome.toUpperCase()}`;
+
+      if (bet === outcome) {
+        message += " ? ?? B?n th?ng!";
+      } else {
+        message += " ? ? B?n thua!";
+      }
+
+      document.getElementById("result").innerText = message;
+      bet = null; // reset cu?c
+    }
+  </script>
+
+</body>
+</html>
+
